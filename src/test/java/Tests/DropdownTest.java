@@ -7,6 +7,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.DropdownPage;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class DropdownTest {
 
@@ -15,10 +16,21 @@ public class DropdownTest {
 
     @BeforeMethod
     public void setUp() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+
+        // Check if running in CI (GitHub Actions sets this automatically)
+        boolean isCI = System.getenv("CI") != null;
+
+        if (isCI) {
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+        }
+
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.get("https://the-internet.herokuapp.com/dropdown");
-        dropdownPage = new DropdownPage(driver);
+        driver.get("https://the-internet.herokuapp.com/login");
+        loginPage = new LoginPage(driver);
     }
 
     @Test
