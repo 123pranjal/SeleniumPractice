@@ -30,7 +30,7 @@ public class DropdownTest {
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.get("https://the-internet.herokuapp.com/login");
-        loginPage = new LoginPage(driver);
+        dropdownPage = new DropdownPage(driver);
     }
 
     @Test
