@@ -31,3 +31,10 @@ jobs:
         with:
           name: extent-report
           path: test-output/ExtentReport.html
+          
+      - name: Upload failure screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-screenshots
+          path: test-output/*.png

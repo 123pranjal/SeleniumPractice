@@ -1,11 +1,20 @@
 package Tests;
 
+import java.io.File;
+
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.io.File;
+import java.nio.file.Files;
+
 import pages.DropdownPage;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -53,9 +62,22 @@ public class DropdownTest {
     }
 
     @AfterMethod
-    public void tearDown() {
+    public void tearDown(ITestResult result) {
+        if (ITestResult.FAILURE == result.getStatus()) {
+            try {
+                File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+                Files.copy(screenshot.toPath(),
+                        new File("test-output/failure_" + result.getName() + ".png").toPath());
+                System.out.println("Page title at failure: " + driver.getTitle());
+                System.out.println("Page source snippet: " +
+                        driver.getPageSource().substring(0, Math.min(500, driver.getPageSource().length())));
+            } catch (Exception e) {
+                System.out.println("Screenshot/debug capture failed: " + e.getMessage());
+            }
+        }
         if (driver != null) {
             driver.quit();
         }
     }
+    
 }
