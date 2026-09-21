@@ -42,7 +42,7 @@ public class DropdownTest {
             driver.manage().window().maximize();
         }
 
-        driver.get("https://the-internet.herokuapp.com/login");
+        driver.get("https://the-internet.herokuapp.com/dropdown");
         dropdownPage = new DropdownPage(driver);
     }
 
