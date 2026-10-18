@@ -15,5 +15,11 @@
             <class name="Tests.DropdownTest"/>
         </classes>
     </test>
+    
+    <test name="ApiTests">
+        <classes>
+            <class name="api.UserApiTest"/>
+        </classes>
+    </test>
 
 </suite>
